@@ -70,6 +70,10 @@ gint compare_node_p (const void *a, const void *b, void *args)
 
 GQueue * convert (guint n, gdouble P[], guint r)
 {
+  /*
+   * Make sure the numble of source words is congruent to 1 module r-1.
+   * If not, complete it.
+   */
   guint k;
   if (r > 2) {
     guint t = n % (r-1);
@@ -77,12 +81,13 @@ GQueue * convert (guint n, gdouble P[], guint r)
   } else {
     k = 0;
   }
+
   GQueue *newP = g_queue_new();
   for (guint i = 0; i < n; ++i) {
     g_queue_push_tail(newP, g_node_new(element_new(i+1, P[i])));
   }
   for (guint i = 0; i < k; ++i) {
-    g_queue_push_head(newP, g_node_new(element_new(n+i+1, 0)));
+    g_queue_push_head(newP, g_node_new(element_new(0, 0)));
   }
 
   g_queue_sort(newP, compare_node_p, NULL);
@@ -93,7 +98,7 @@ GQueue * convert (guint n, gdouble P[], guint r)
 GNode * huffmantree (guint n, gdouble P[], guint r)
 {
   GQueue *newP = convert(n, P, r);
-  /* print_queue(newP); */
+
   while (newP->length != 1) {
     Element *newElement = element_new(0, 0);
     GNode *newNode = g_node_new(newElement);
@@ -105,6 +110,7 @@ GNode * huffmantree (guint n, gdouble P[], guint r)
     }
     g_queue_insert_sorted(newP, newNode, compare_node_p, NULL);
   }
+
   return g_queue_pop_head(newP);
 }
 
@@ -118,7 +124,7 @@ gboolean code_node (GNode *node, gpointer args)
     gint posi = g_node_child_position(node->parent, node);
     gchar pos = (gchar)('0' + posi);
     g_string_append_c(data->code, pos);
-    if (G_NODE_IS_LEAF(node)) {
+    if (data->var > 0) {
       g_queue_push_tail(leafQueue, node);
     }
   }
