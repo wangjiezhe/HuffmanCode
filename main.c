@@ -9,18 +9,15 @@ void test1 ()
   }
 
   gchar **res1 = huffman(n, P, 2);
-  g_printf("Case 1, r = 2:\n");
+  g_printf("\nCase 1, r = 2:\n");
   for (guint i = 0; i < n; ++i) {
     g_printf("x_%d: %s\n", i+1, res1[i]);
   }
-  g_printf("\n");
-
   gchar **res2 = huffman(n, P, 3);
-  g_printf("Case 1, r = 3:\n");
+  g_printf("\nCase 1, r = 3:\n");
   for (guint i = 0; i < n; ++i) {
     g_printf("x_%d: %s\n", i+1, res2[i]);
   }
-  g_printf("\n");
 }
 
 void test2 ()
@@ -29,18 +26,16 @@ void test2 ()
   gdouble P[] = {.01, .05, .39, .46, .09};
 
   gchar **res1 = huffman(n, P, 2);
-  g_printf("Case 2, r = 2:\n");
+  g_printf("\nCase 2, r = 2:\n");
   for (guint i = 0; i < n; ++i) {
     g_printf("x_%d: %s\n", i+1, res1[i]);
   }
-  g_printf("\n");
 
   gchar **res2 = huffman(n, P, 3);
-  g_printf("Case 2, r = 3:\n");
+  g_printf("\nCase 2, r = 3:\n");
   for (guint i = 0; i < n; ++i) {
     g_printf("x_%d: %s\n", i+1, res2[i]);
   }
-  g_printf("\n");
 }
 
 int main(int argc, char *argv[])

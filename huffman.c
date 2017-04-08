@@ -8,6 +8,7 @@ void print_element(Element *e)
 void print_node(GNode *n)
 {
   Element *e = n->data;
+  g_printf("Node: ");
   print_element(e);
 }
 
@@ -92,6 +93,7 @@ GQueue * convert (guint n, gdouble P[], guint r)
 GNode * huffmantree (guint n, gdouble P[], guint r)
 {
   GQueue *newP = convert(n, P, r);
+  /* print_queue(newP); */
   while (newP->length != 1) {
     Element *newElement = element_new(0, 0);
     GNode *newNode = g_node_new(newElement);
@@ -136,12 +138,10 @@ gchar ** huffman (guint n, gdouble P[], guint r)
   GNode *root = huffmantree(n, P, r);
   guint d = g_node_depth(root);
   GQueue *leaves = code_tree(root);
-  /* gchar **codes = g_malloc(sizeof(gchar*)*n); */
   gchar **codes = g_malloc(sizeof(gchar*)*n + sizeof(char)*d*n);
   for (guint i = 0; i < n; ++i) {
     GNode *tempNode = g_queue_pop_head(leaves);
     Element *tempElement = tempNode->data;
-    /* codes[i] = g_malloc(sizeof(char)*d); */
     codes[i] = tempElement->code->str;
   }
   /* g_node_destroy(root); */
