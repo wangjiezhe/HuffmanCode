@@ -4,9 +4,14 @@ project(HuffmanCode)
 set(CMAKE_CXX_STANDARD 11)
 
 find_package (PkgConfig REQUIRED)
-pkg_check_modules (GTK2 REQUIRED gtk+-2.0)
-include_directories (${GTK2_INCLUDE_DIRS})
-link_directories (${GTK2_LIBRARY_DIRS})
+pkg_check_modules (GLIB REQUIRED glib-2.0)
+if(GLIB_FOUND)
+  include_directories (${GLIB_INCLUDE_DIRS})
+  link_directories (${GLIB_LIBRARY_DIRS})
+  add_definitions (${GLIB_CFLAGS_OTHER})
+else(GLIB_FOUND)
+  message(FATAL_ERROR "glib-2.0 not found!")
+endif(GLIB_FOUND)
 
 set(SOURCE_FILES
         huffman.c
@@ -15,5 +20,4 @@ set(SOURCE_FILES
 
 add_executable(HuffmanCode ${SOURCE_FILES})
 
-add_definitions (${GTK2_CFLAGS_OTHER})
-target_link_libraries (HuffmanCode ${GTK2_LIBRARIES})
+target_link_libraries (HuffmanCode ${GLIB_LIBRARIES})
