@@ -7,3 +7,7 @@ build/
 .idea/
 TAGS*
 main
+*.gch
+*.o
+*.s
+cmake-build-debug/

@@ -2,13 +2,8 @@
 #include <glib/gprintf.h>
 
 typedef struct _Element Element;
-struct _Element {
-  guint var;
-  gdouble p;
-  GString *code;
-};
 
-Element * element_new (gint var, gdouble p);
+Element * element_new (guint var, gdouble p);
 
 gint compare_element_var (Element *a, Element *b);
 gint compare_node_var (const void *a, const void *b, void *args);

@@ -1,5 +1,11 @@
 #include "huffman.h"
 
+struct _Element {
+    guint var;
+    gdouble p;
+    GString *code;
+};
+
 void print_element(Element *e)
 {
   g_printf("Element %d: %.2f, %s\n", e->var, e->p, e->code->str);
@@ -23,7 +29,7 @@ void print_queue(GQueue *q)
   }
 }
 
-Element * element_new (gint var, gdouble p)
+Element * element_new (guint var, gdouble p)
 {
   Element * t = g_malloc(sizeof(Element));
   t->var = var;
