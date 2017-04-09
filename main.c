@@ -1,3 +1,11 @@
+/*
+ * Main programming to compute the Huffman code practically.
+ *
+ * This file is placed in the public domain.
+ *
+ * Maintainer: Jiezhe Wang
+ */
+
 #include "huffman.h"
 
 void test1 ()
