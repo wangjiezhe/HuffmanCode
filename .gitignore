@@ -11,3 +11,7 @@ main
 *.o
 *.s
 cmake-build-debug/
+GPATH
+GRTAGS
+GTAGS
+ID
