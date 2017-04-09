@@ -6,10 +6,10 @@ Project for Course `Fundamentals of Information Science`.
 Requisition
 -----------
 
-Implement the algorithm for r-ary Huffman code.
+Implement the algorithm for n-ary Huffman code.
 
-Environment
------------
+Tested Environment
+------------------
 
 - OS: Linux 4.10.8-1-ARCH
 - gcc: 6.3.1
