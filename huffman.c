@@ -192,12 +192,13 @@ GQueue * convert (guint n, gdouble P[], guint r)
   for (guint i = 0; i < n; ++i) {
     g_queue_push_tail(newP, g_node_new(element_new(i+1, P[i])));
   }
-  for (guint i = 0; i < k; ++i) {
-    g_queue_push_head(newP, g_node_new(element_new(0, 0)));
-  }
 
   /* Use sort to get a priority queue */
   g_queue_sort(newP, compare_node_p, NULL);
+
+  for (guint i = 0; i < k; ++i) {
+    g_queue_push_head(newP, g_node_new(element_new(0, 0)));
+  }
 
   return newP;
 }
@@ -243,7 +244,7 @@ GNode * huffmantree (guint n, gdouble P[], guint r)
  */
 gboolean code_node (GNode *node, gpointer queue)
 {
-  GQueue *leafQueue = (GQueue *) queue;
+  GQueue *realLeafQueue = (GQueue *) queue;
   Element *data = node->data;
   if (!G_NODE_IS_ROOT(node)) {
     Element *parentData = node->parent->data;
@@ -252,7 +253,7 @@ gboolean code_node (GNode *node, gpointer queue)
     gchar pos = (gchar)('0' + posi);
     g_string_append_c(data->code, pos);
     if (data->var > 0) {
-      g_queue_push_tail(leafQueue, node);
+      g_queue_push_tail(realLeafQueue, node);
     }
   }
   return FALSE;
@@ -268,10 +269,10 @@ gboolean code_node (GNode *node, gpointer queue)
  */
 GQueue * code_tree (GNode *root)
 {
-  GQueue *leafQueue = g_queue_new();
-  g_node_traverse(root, G_LEVEL_ORDER, G_TRAVERSE_ALL, -1, code_node, leafQueue);
-  g_queue_sort(leafQueue, compare_node_var, NULL);
-  return leafQueue;
+  GQueue *realLeafQueue = g_queue_new();
+  g_node_traverse(root, G_LEVEL_ORDER, G_TRAVERSE_ALL, -1, code_node, realLeafQueue);
+  g_queue_sort(realLeafQueue, compare_node_var, NULL);
+  return realLeafQueue;
 }
 
 /**
